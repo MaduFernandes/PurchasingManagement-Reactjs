@@ -1,14 +1,23 @@
+//React
 import { useHistory, Link } from "react-router-dom";
 
+//Hooks
+import { useAuth } from "../../hooks/useAuth";
+
 //images
-import cartShopping from "../assets/images/cart-shopping.gif";
-import googleIcon from "../assets/images/google-icon.svg";
+import cartShopping from "../../assets/images/cart-shopping.gif";
+import googleIcon from "../../assets/images/google-icon.svg";
 
 //scss
-import "../styles/auth.scss";
+import "../../styles/auth.scss";
 
-export const Home = () => {
+export const Login = () => {
   const history = useHistory();
+  const { user, loginWithGoogle } = useAuth();
+
+  const handleNewPage = async () => {
+    !user ? await loginWithGoogle : history.push("/home");
+  };
 
   return (
     <>
@@ -20,13 +29,13 @@ export const Home = () => {
         </aside>
         <main>
           <div className="content-main">
-            <button className="button-google">
+            <button className="button-google" onClick={handleNewPage}>
               <img src={googleIcon} alt="Logo do Google" />
               Fazer login com o Google
             </button>
             <div className="separator">
               <p>
-                ou crie uma <Link to="/register">conta</Link>
+                ou crie uma <Link to="/register"> conta </Link>
               </p>
             </div>
             <form>
